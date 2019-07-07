@@ -1,7 +1,6 @@
 extends ModeManager
 
 signal score
-signal show_score
 
 func _on_sth_collected(collector, collectee):
 	if collectee is Crown and ECM.E(collector).could_have('Royal'):
@@ -28,4 +27,4 @@ func _process(delta):
 		assert royal.get_host() is Ship
 		
 		emit_signal('score', royal.get_host().species, delta)
-		emit_signal('show_score', royal.get_host().species_template, delta, royal.get_host().position)
+		

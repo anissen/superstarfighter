@@ -6,7 +6,7 @@ const NUM_KEYBOARDS = 2
 
 enum ALL_SPECIES {SPECIES0, SPECIES1, SPECIES2, SPECIES3, SPECIES4}
 onready var container = $Container
-onready var fight_node = $BottomHUD/Fight
+
 var available_species : Dictionary
 var ordered_species : Array # as available_species Dic [str:Resource]
 
@@ -19,14 +19,14 @@ var num_players : int = 0
 
 func _ready():
 	# Soundtrack.play("Lobby", true)
-	fight_node.visible = false
+	$Fight.visible = false
 	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
-
+	
 
 func initialize(_available_species:Dictionary):
 	available_species = _available_species
 	ordered_species = available_species.values()
-
+	
 	var i = 0
 	for child in container.get_children():
 		assert(child is Species)
@@ -67,7 +67,7 @@ func add_controls(new_controls : String) -> bool:
 		if child.controls == new_controls:
 			i+=1
 			continue
-
+			
 		if shift:
 			var tmp = child.controls
 			child.set_controls(last)
@@ -95,9 +95,9 @@ func change_controls(key:String, new_key:String) -> bool:
 		last = child.controls
 		assert(child is Species)
 		child.set_controls(to_change)
-
+		
 	return false
-
+	
 func assign_controls(num_keyboards : int) -> Array:
 	"""
 	Depending on how many keyboard want to play
@@ -105,12 +105,12 @@ func assign_controls(num_keyboards : int) -> Array:
 	"""
 	players_controls = []
 	var num_players = 0
-
+	
 	# set for keyboards
 	for i in range(num_keyboards):
 		num_players +=1
 		players_controls.append("kb"+str(num_keyboards-i))
-
+		
 	# check on joypad
 	var joypads = Input.get_connected_joypads()
 	for i in range(len(joypads)):
@@ -118,7 +118,7 @@ func assign_controls(num_keyboards : int) -> Array:
 		players_controls.append("joy"+str(i+1))
 		if len(players_controls) >= MAX_PLAYERS:
 			break
-
+	
 	# now put NO on the rest of players
 	return players_controls
 
@@ -129,14 +129,14 @@ func get_players() -> Array:
 		if child.controls != "no" and child.selected:
 			players.append(child)
 	return players
-
+	
 func get_adjacent(operator:int, player_selection : Node):
-	var current_index = ordered_species.find(player_selection.species_template)
+	var current_index = ordered_species.find(player_selection.species_template) 
 	current_index = global.mod(current_index + operator,len(ordered_species))
 	while current_index in selected_index:
 		current_index = global.mod(current_index + operator,len(ordered_species))
 	player_selection.change_species(ordered_species[current_index])
-
+	
 func _on_joy_connection_changed(device_id, connected):
 	var joy = "joy"+str(device_id+1)
 	if connected:
@@ -154,7 +154,7 @@ func ready_to_fight():
 		print("not enough players")
 
 func selected(species:SpeciesTemplate):
-	var current_index = ordered_species.find(species)
+	var current_index = ordered_species.find(species) 
 	selected_index.append(current_index)
 	for child in container.get_children():
 		if not child.selected and child.species_template == species:
@@ -162,25 +162,25 @@ func selected(species:SpeciesTemplate):
 	var players = get_players()
 	if len(players) >= MIN_PLAYERS:
 		deselected = false
-		fight_node.set_label(fight_mode.to_upper())
-		#global.shake_node(fight_node, $Tween)
-		fight_node.wiggle()
-		fight_node.visible = true
+		$Fight.visible = true
+		global.shake_node($Fight, $Tween)
+		$Fight/Sprite/AnimationPlayer.play("wiggle")
+		$Fight/Label.text = fight_mode.to_upper()
 
 # this is in order to avoid to leave the screen if there is just one player
 # TODO: it should be with signals
 var deselected = false
 
 func deselected(species:SpeciesTemplate):
-	var current_index = ordered_species.find(species)
+	var current_index = ordered_species.find(species) 
 	selected_index.remove(selected_index.find(current_index))
 	var players = get_players()
 	if len(players) < MIN_PLAYERS:
 		deselected = true
-		global.shake_node(fight_node, $Tween)
-		fight_node.idle()
-		fight_node.visible = false
-
+		global.shake_node($Fight, $Tween)
+		$Fight/Sprite/AnimationPlayer.play("idle")
+		$Fight.visible = false
+		
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -206,11 +206,11 @@ func _process(delta):
 		else:
 			dict_species[species_name][child.species_template.id] = child
 		child.unset_team()
-
+		
 	for s in dict_species:
 		if len(dict_species[s])>1:
 			teams += 1
-
+			
 		for key in dict_species[s]:
 			var p = dict_species[s][key]
 			if len(dict_species[s])>1:
@@ -220,11 +220,11 @@ func _process(delta):
 			else:
 				if p.selected:
 					at_least_one_solo_selected = true
-
+	
 	fight_mode = "versus"
 	if len(get_players()) == 1:
 		fight_mode = "solo"
 	elif len(get_players()) == 2:
 		if at_least_one_character_in_team_selected and not at_least_one_solo_selected:
 			fight_mode = "co-op"
-	fight_node.set_label('play %s' % fight_mode)
+	$Fight/Label.text = ('play ' + fight_mode).to_upper()

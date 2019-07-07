@@ -8,6 +8,8 @@ var entity : Entity
 
 func _ready():
 	entity = ECM.E(self)
+	if ship.cpu:
+		$Camera2D.current = false
 	
 func set_ship(new_value):
 	ship = new_value

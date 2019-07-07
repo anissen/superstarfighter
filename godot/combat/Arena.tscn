@@ -195,6 +195,7 @@ script = ExtResource( 16 )
 layer = 2
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource( 18 )]
+visible = false
 
 [node name="Pause" parent="CanvasLayer" instance=ExtResource( 19 )]
 editor/display_folded = true
@@ -246,10 +247,8 @@ visible = false
 
 [node name="Camera" type="Camera2D" parent="."]
 pause_mode = 2
-current = true
 script = ExtResource( 25 )
 debug_mode = false
-enabled = true
 
 [node name="GameOver" type="AnimationPlayer" parent="."]
 "anims/Game Over" = SubResource( 2 )
