@@ -1,0 +1,297 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://combat/Arena.tscn" type="PackedScene" id=1]
+[ext_resource path="res://combat/modes/Deathmatch.tres" type="Resource" id=2]
+[ext_resource path="res://combat/levels/background/mantiacs.png" type="Texture" id=3]
+[ext_resource path="res://actors/environments/Wall.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/geometry/GBeveledRect.gd" type="Script" id=5]
+[ext_resource path="res://addons/geometry/icons/GBeveledRect.svg" type="Texture" id=6]
+[ext_resource path="res://actors/environments/Field.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/geometry/GCircle.gd" type="Script" id=8]
+[ext_resource path="res://addons/geometry/icons/GCircle.svg" type="Texture" id=9]
+[ext_resource path="res://combat/PlayerSpawner.tscn" type="PackedScene" id=10]
+[ext_resource path="res://selection/characters/takonauts_1.tres" type="Resource" id=11]
+[ext_resource path="res://selection/characters/mantiacs_1.tres" type="Resource" id=12]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Wobble"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 1.1, 1 ), Vector2( 1, 1.1 ), Vector2( 1.1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Shrink"
+length = 90.0
+step = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("GCircle:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 90 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 350, 50 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Wobble"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 1.1, 1 ), Vector2( 1, 1.1 ), Vector2( 1.1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Shrink"
+length = 90.0
+step = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("GCircle:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 90 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 150, 50 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Wobble"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 1.1, 1 ), Vector2( 1, 1.1 ), Vector2( 1.1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Shrink"
+length = 90.0
+step = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("GCircle:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 90 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 150, 50 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Wobble"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 1.1, 1 ), Vector2( 1, 1.1 ), Vector2( 1.1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Shrink"
+length = 90.0
+step = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("GCircle:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 90 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 350, 50 ]
+}
+
+[node name="Arena" index="0" instance=ExtResource( 1 )]
+size_multiplier = 2.5
+game_mode = ExtResource( 2 )
+
+[node name="CrownModeManager" parent="." index="5"]
+enabled = false
+
+[node name="DeathmatchModeManager" parent="." index="6"]
+enabled = true
+
+[node name="mantiacs_background" type="Sprite" parent="BackgroundLayer" index="0"]
+texture = ExtResource( 3 )
+centered = false
+
+[node name="OutsideWall" parent="Battlefield/Background" index="0" instance=ExtResource( 4 )]
+hollow = true
+offset = 200
+elongation = 100
+type = 0
+hide_line = false
+hide_grid = false
+grid_color = Color( 0, 1, 0.741176, 0.435294 )
+grid_rotation = 0.0
+
+[node name="GBeveledRect" type="Node" parent="Battlefield/Background/OutsideWall" index="3"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 6 )
+}
+width = 2400
+height = 1800
+bevel = 100
+
+[node name="Water" parent="Battlefield/Overlay" index="1" instance=ExtResource( 7 )]
+position = Vector2( -650, -250 )
+scale = Vector2( 1.1, 1 )
+
+[node name="GCircle" type="Node" parent="Battlefield/Overlay/Water" index="7"]
+script = ExtResource( 8 )
+__meta__ = {
+"_editor_icon": ExtResource( 9 )
+}
+radius = 350
+precision = 10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Battlefield/Overlay/Water" index="8"]
+autoplay = "Wobble"
+playback_process_mode = 0
+playback_speed = 2.0
+anims/Wobble = SubResource( 1 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Battlefield/Overlay/Water" index="9"]
+autoplay = "Shrink"
+playback_process_mode = 0
+anims/Shrink = SubResource( 2 )
+
+[node name="Water3" parent="Battlefield/Overlay" index="2" instance=ExtResource( 7 )]
+position = Vector2( -550, 550 )
+scale = Vector2( 1.05, 1.05 )
+
+[node name="GCircle" type="Node" parent="Battlefield/Overlay/Water3" index="7"]
+script = ExtResource( 8 )
+__meta__ = {
+"_editor_icon": ExtResource( 9 )
+}
+radius = 150
+precision = 10.0
+
+[node name="AnimationPlayer3" type="AnimationPlayer" parent="Battlefield/Overlay/Water3" index="8"]
+autoplay = "Wobble"
+playback_process_mode = 0
+playback_speed = 2.0
+anims/Wobble = SubResource( 3 )
+
+[node name="AnimationPlayer4" type="AnimationPlayer" parent="Battlefield/Overlay/Water3" index="9"]
+autoplay = "Shrink"
+playback_process_mode = 0
+anims/Shrink = SubResource( 4 )
+
+[node name="Water4" parent="Battlefield/Overlay" index="3" instance=ExtResource( 7 )]
+position = Vector2( 550, -550 )
+scale = Vector2( 1.05, 1.05 )
+
+[node name="GCircle" type="Node" parent="Battlefield/Overlay/Water4" index="7"]
+script = ExtResource( 8 )
+__meta__ = {
+"_editor_icon": ExtResource( 9 )
+}
+radius = 150
+precision = 10.0
+
+[node name="AnimationPlayer5" type="AnimationPlayer" parent="Battlefield/Overlay/Water4" index="8"]
+autoplay = "Wobble"
+playback_process_mode = 0
+playback_speed = 2.0
+anims/Wobble = SubResource( 5 )
+
+[node name="AnimationPlayer6" type="AnimationPlayer" parent="Battlefield/Overlay/Water4" index="9"]
+autoplay = "Shrink"
+playback_process_mode = 0
+anims/Shrink = SubResource( 6 )
+
+[node name="Water2" parent="Battlefield/Overlay" index="4" instance=ExtResource( 7 )]
+position = Vector2( 650, 250 )
+scale = Vector2( 1.1, 1 )
+
+[node name="GCircle" type="Node" parent="Battlefield/Overlay/Water2" index="7"]
+script = ExtResource( 8 )
+__meta__ = {
+"_editor_icon": ExtResource( 9 )
+}
+radius = 350
+precision = 10.0
+
+[node name="AnimationPlayer3" type="AnimationPlayer" parent="Battlefield/Overlay/Water2" index="8"]
+autoplay = "Wobble"
+playback_process_mode = 0
+playback_speed = 2.0
+anims/Wobble = SubResource( 7 )
+
+[node name="AnimationPlayer4" type="AnimationPlayer" parent="Battlefield/Overlay/Water2" index="9"]
+autoplay = "Shrink"
+playback_process_mode = 0
+anims/Shrink = SubResource( 8 )
+
+[node name="p1" parent="SpawnPositions/Players" index="0" instance=ExtResource( 10 )]
+position = Vector2( -900, -600 )
+rotation = 0.0
+species_template = ExtResource( 11 )
+
+[node name="p2" parent="SpawnPositions/Players" index="1" instance=ExtResource( 10 )]
+position = Vector2( 900, 600 )
+rotation = 3.14159
+controls = "joy2"
+species_template = ExtResource( 12 )
+cpu = true
+
+[node name="Countdown" parent="CanvasLayer" index="4"]
+margin_left = -262.0
+margin_right = 261.0
+
+[node name="Camera" parent="." index="16"]
+smoothing_speed = 0.3
+[connection signal="item_rect_changed" from="BackgroundLayer/mantiacs_background" to="." method="_on_mantiacs_background_item_rect_changed"]
+
+[editable path="CanvasLayer/Pause"]
