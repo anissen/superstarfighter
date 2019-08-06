@@ -192,6 +192,10 @@ func fire():
 	$GravitonField.repeal(charge_impulse)
 	#$GravitonField.enabled = false
 	
+	# repeal
+	$GravitonField.repeal(charge_impulse)
+	#$GravitonField.enabled = false
+	
 	charging = false
 	$Graphics/ChargeBar.visible = false
 	fire_cooldown = 0 # disabled

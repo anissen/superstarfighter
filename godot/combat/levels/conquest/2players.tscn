@@ -46,6 +46,9 @@ __meta__ = {
 radius = 1400
 sides = 6.0
 
+[node name="GridPack" parent="Battlefield/Background" index="1"]
+visible = false
+
 [node name="Cell" parent="Battlefield/Middleground" index="0" instance=ExtResource( 7 )]
 position = Vector2( -300, -860 )
 rotation = 0.523599
